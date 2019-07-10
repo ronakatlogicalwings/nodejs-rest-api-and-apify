@@ -50,14 +50,13 @@ app.post('/', function(req, res){
 });
 
 app.put('/:id', function(req, res){
-    console.log("ID : ", req.param.id);
-    console.log("PUT REQUEST");
-    res.send('PUT');
+    let sqlQuery = "update [Persons] set LastName='"+req.body.LastName+"', FirstName='"+req.body.FirstName+"', Address='"+req.body.Address+"', City= '"+req.body.City+"' WHERE PersonID="+req.params.id;
+    queryToExecuteInDatabase(res, sqlQuery);
 });
 
-app.delete('/:id[0-9]', function(req, res){
-    console.log("DELETE REQUEST");
-    res.send('DELETE');
+app.delete('/:id', function(req, res){
+    let sqlQuery = "delete from [Persons] WHERE PersonID=" + req.params.id;
+    queryToExecuteInDatabase(res, sqlQuery);
 });
 
 const server = app.listen(process.env.port || 8082, 'localhost', function(err){
